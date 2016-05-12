@@ -1,0 +1,43 @@
+
+perl fasta.pl
+
+mkdir names
+
+mv *.fasta names
+
+cd names 
+
+#change the file name
+ for f in *.fasta 
+ do mv -- "$f" "${f%.fasta}.seq.names"
+ done
+
+
+cd ..
+
+mkdir dgrp_Chr2L_sequences_fastas
+
+cd /Users/Binky/desktop/fasta/dgrp/dgrp_Chr2L
+
+files1=(*.seq)
+echo ${files1[@]}
+
+for i in "${files1[@]}"
+do paste -d "\n" /Users/Binky/desktop/fasta/dgrp/names/$i.names $i > ../dgrp_Chr2L_sequences_fastas/$i.fasta
+done
+
+cd ..
+
+cd dgrp_Chr2L_sequences_fastas Binky$ 
+
+ files=(*.fasta)
+ echo ${files[@]}
+
+for i in ${files[@]} 
+do sed -e 's/^>Chr2L/>Chr2L.'${i}'/g' $i > $i.corrected.fasta; 
+done
+
+ for f in *.seq.fasta.corrected.fasta
+ do mv -- "$f" "${f%.seq.fasta.corrected.fasta}.fasta"
+ done
+rm *.seq.fasta
